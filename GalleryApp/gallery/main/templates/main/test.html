@@ -1,0 +1,86 @@
+{% extends 'main/based.html' %}
+
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+
+
+{% block content %}
+    <main>
+
+
+
+         <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+              <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light"><font style="vertical-align: inherit;"> Галерея</font></h1>
+                <p class="lead text-muted"><font style="vertical-align: inherit;">Создайте свою коллекцию, как сделал это я - создатель. <font style="vertical-align: inherit;"></font></font></p>
+                <p>
+                    <form method="post" enctype="multipart/form-data">
+
+                     {{ form.as_p }}
+                    <button  class="btn btn-primary my-2" type="submit"><font style="vertical-align: inherit;"> Добавить </font> </button>
+                 </form>
+
+                </p>
+              </div>
+            </div>
+              {% csrf_token %}
+              {% if img_obj %}
+            <h3>Успешно загружено : {{img_obj.title}}</h3>
+          </section>
+
+                <div class="album py-5 bg-light">
+                <div class="container">
+
+                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                      {% for img_obj in img_all %}
+                    <div class="col">
+
+                      <div class="card shadow-sm">
+
+                                <rect width="100%" height="100%" fill="#55595c">
+                                </rect>
+                         <img src="{{ img_obj.image.url}}" alt="connect">
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{img_obj.title}}</text>
+
+
+
+                            </svg>
+
+                          <div class="card-body">
+
+                              <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+
+                                </div>
+                                <small class="text-muted"><font style="vertical-align: inherit;">{{img_obj.id}}</font></small>
+                         </div>
+                     </div>
+
+                    </div>
+
+                    </div>
+{% endfor %}
+{% endif %}
+            </div>
+
+          </div>
+
+         </div>
+
+
+        </div>
+
+
+    </main>
+{% endblock %}
+
+
+
+
+
+
+<a href="#" class="btn btn-primary my-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Основной призыв к действию</font></font></a>
