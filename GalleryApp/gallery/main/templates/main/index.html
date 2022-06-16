@@ -8,7 +8,7 @@
 
 
 {% block content %}
-    <main>
+<main xmlns="http://www.w3.org/1999/html">
         <style>
            .scale {
             transition: 0.5s;
@@ -29,7 +29,16 @@
                      {{ form.as_p }}
                     <button  class="btn btn-primary my-2" type="submit"><font style="vertical-align: inherit;"> Добавить </font> </button>
                  </form>
-
+                  <form action="{% url 'Delete' %}" method="post"  >
+                      {% csrf_token %}
+                       <input class="btn btn-outline-secondary my-2" type="submit" value="Удалить">
+<!--                      <button type="button" class="btn btn-sm btn-outline-secondary my-2"><font style="vertical-align: inherit;">Удалить</font></button>-->
+                  </form>
+                  <form class="d-flex" role="search" method="post" action="{% url 'tag-search' %}">
+                      {% csrf_token %}
+                        <input class="form-control me-2" type="search" placeholder="Tag Search" aria-label="Поиск" name="searched">
+                        <button class="btn btn-outline-secondary" type="submit"><font style="vertical-align: inherit;">Поиск</font></button>
+                  </form>
                 </p>
               </div>
             </div>
@@ -55,12 +64,14 @@
 
                             </svg>
 
-                          <div class="scale card-body">
+                          <div class="card-body">
 
                               <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
 
-                                </div>
+                                    <div class="btn-group">
+
+                                    </div>
+
                                 <small class="text-muted"><font style="vertical-align: inherit;">{{img_obj.id}}</font></small>
                          </div>
                      </div>
@@ -68,12 +79,11 @@
                     </div>
 
                     </div>
-{% endfor %}
-
+    {% endfor %}
                       {% else %}
-                      <p class="lead text-muted"><font style="vertical-align: inherit;">У вас не заполнена галерея</font></p>
+                         <p class="lead text-muted"><font style="vertical-align: inherit;">У вас не заполнена галерея</font></p>
 
-{% endif %}
+                {% endif %}
             </div>
 
           </div>
@@ -81,7 +91,7 @@
          </div>
 
 
-        </div>
+
 
 
     </main>

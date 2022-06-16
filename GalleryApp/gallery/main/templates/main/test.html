@@ -63,8 +63,8 @@
                     </div>
 
                     </div>
-{% endfor %}
-{% endif %}
+        {% endfor %}
+        {% endif %}
             </div>
 
           </div>
@@ -84,3 +84,113 @@
 
 
 <a href="#" class="btn btn-primary my-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Основной призыв к действию</font></font></a>
+
+__________________________________________________________________________________________________________________________________________________________________
+
+{% extends 'main/based.html' %}
+
+
+{% block title %}
+Страница поиска
+{% endblock %}
+
+
+
+{% block content %}
+    {% if searched %}
+
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+              <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light"><font style="vertical-align: inherit;">Вы ищите {{searched}}...</font></h1>
+              </div>
+            </div>
+        </section>
+                <div class="album py-5 bg-light">
+                 <div class="container">
+                   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {% for el in img_all %}
+            {% if searched == el.tags %}
+                    <div class="col">
+
+                      <div class="scale card shadow-sm">
+                                <rect width="100%" height="100%" fill="#55595c">
+                                </rect>
+                                <img src="{{ el.image.url}}" alt="connect">
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{searched.title}}</text>
+
+
+
+                            </svg>
+
+                          <div class="scale card-body">
+
+                              <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                  <form class="d-flex" role="search" method="post" action="{% url 'delete' todo_id=el.id%}">
+                                    {% csrf_token %}
+                                     <input id="submit" type="button" value="Delete" class="btn btn-sm btn-outline-secondary"><font style="vertical-align: inherit;">Удалить</font></button>
+                                  </form>
+                                </div>
+                                <small class="text-muted"><font style="vertical-align: inherit;">{{img_obj.id}}</font></small>
+                         </div>
+                     </div>
+
+                    </div>
+
+                    </div>
+            {% endif %}
+            {% endfor %}
+
+            {% else %}
+                <center>
+                    <h1 class="fw-light"><font style="vertical-align: inherit;">Ошибка поиска. Того что вы ищите нет.</font></h1>
+                </center>
+            {% endif %}
+
+       </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{    # if request.method == 'POST':
+    #     searched = request.POST.get('searched', False)
+    #     flag_list = searched.split()
+    #     for item in flag_list:
+    #         tag = Image.objects.filter(tags__contains=item)
+    #         context = {'searched': searched,  'tag': tag}
+    #     return render(request, 'main/tag_search.html', context)}}
