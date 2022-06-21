@@ -1,8 +1,9 @@
 from django.urls import path
-from . import views
+from .views import *
 
 urlpatterns = [
-    path('', views.image_upload),
-    path(' tag_search ', views.tag_search, name='tag-search'),
-    path(' delete ', views.delete, name='Delete'),
+    path('', index, name='index'),
+    path('image_upload', image_upload, name='image-upload'),
+    path('tag_search', tag_search, name='tag-search'),
+    path('delete/<int:img_id>', delete, name='delete'),
 ]
