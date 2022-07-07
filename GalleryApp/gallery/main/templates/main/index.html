@@ -5,6 +5,15 @@
 Главная страница
 {% endblock %}
 
+{% block headers %}
+  <div class="  mx-0 ">
+    <form class="d-flex" role="search" method="post"  action="{% url 'tag-search' %}">
+      {% csrf_token %}
+      {{ search_form.as_p }}
+      <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+    </form>
+  </div>
+{% endblock %}
 
 
 {% block content %}
@@ -13,21 +22,19 @@
     <div class="row py-lg-5">
       <div class="col-lg-7 col-md-8 mx-auto">
         <h1 class="fw-light"> Галерея</h1>
-          <p class="lead text-muted">Создайте свою коллекцию, как сделал это я - создатель. </p>
-            <p>
-              <form method="post" enctype="multipart/form-data" action="{% url 'image-upload' %}">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button  class="btn btn-primary my-2" type="submit"> Добавить  </button>
-              </form>
-              <form class="d-flex" role="search" method="post" action="{% url 'tag-search' %}">
-                {% csrf_token %}
-                <input class="form-control me-2" type="search" placeholder="Tag Search" aria-label="Поиск" name="searched">
-                <button class="btn btn-outline-secondary" type="submit">Поиск</button>
-              </form>
-          </p>
-        </div>
+        <p class="lead text-muted">Создайте свою коллекцию, как сделал это я - создатель. </p>
+        <p>
+          <form method="post" enctype="multipart/form-data" action="{% url 'image-upload' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button  class="btn btn-primary my-2" type="submit"> Добавить  </button>
+          </form>
+          <div class="col-lg-4 col-md-8 mx-auto ">
+            <!-- Место для поиска -->
+          </div>
+        </p>
       </div>
+    </div>
 <!--    <a href="#">Загрузить</a>-->
       {% if img_all %}
         {% if img_obj %}
@@ -40,24 +47,28 @@
           {% for img_obj in img_all %}
             <div class="col">
               <div class="scale card shadow-sm">
-                <rect width="100%" height="100%" fill="#55595c"></rect>
-                <img src="{{ img_obj.image.url}}" alt="connect">
+                <a href="{% url 'picture-page' img_obj.id  %}">
+                <rect width="100%" height="100%" fill="#55595c" ></rect>
+                <img  width="100%" height="100%" fill="#55595c" src="{{ img_obj.image.url}}" alt="connect" href="{% url 'picture-page' img_obj.id  %}" ></a>
                 <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{img_obj.title}}</text>
                 </svg>
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <small class="text-muted">{{img_obj.id}}</small>
-                      <a href="{% url 'delete' img_obj.id  %}">Удалить</a>
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">{{img_obj.id}}</small>
+                    <div class="btn-group">
+                      <a class="btn btn-sm btn-outline-secondary" href="{% url 'delete' img_obj.id  %}">Удалить</a>
+                      <a class="btn btn-sm btn-outline-secondary" href="{% url 'image-edit' img_obj.id  %}">Редактировать</a>
                     </div>
                   </div>
                 </div>
               </div>
-            {% endfor %}
-      {% else %}
-        <p class="lead text-muted">У вас не заполнена галерея</p>
-      {% endif %}
+            </div>
+          {% endfor %}
         </div>
       </div>
     </div>
+      {% else %}
+        <p class="lead text-muted">У вас не заполнена галерея</p>
+      {% endif %}
 </main>
 {% endblock %}

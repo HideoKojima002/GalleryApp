@@ -2,195 +2,74 @@
 
 
 {% block title %}
-Главная страница
+Страница изменения
+{% endblock %}
+
+{% block headers %}
+  <div class="  mx-0 ">
+    <form class="d-flex" role="search" method="post"  action="{% url 'tag-search' %}">
+      {% csrf_token %}
+      {{ search_form.as_p }}
+      <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+    </form>
+  </div>
 {% endblock %}
 
 
-
 {% block content %}
-    <main>
-
-
-
-         <section class="py-5 text-center container">
-            <div class="row py-lg-5">
-              <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light"><font style="vertical-align: inherit;"> Галерея</font></h1>
-                <p class="lead text-muted"><font style="vertical-align: inherit;">Создайте свою коллекцию, как сделал это я - создатель. <font style="vertical-align: inherit;"></font></font></p>
-                <p>
-                    <form method="post" enctype="multipart/form-data">
-
-                     {{ form.as_p }}
-                    <button  class="btn btn-primary my-2" type="submit"><font style="vertical-align: inherit;"> Добавить </font> </button>
-                 </form>
-
-                </p>
-              </div>
-            </div>
+<main xmlns="http://www.w3.org/1999/html">
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-7 col-md-8 mx-auto">
+        <h1 class="fw-light"> Галерея</h1>
+        <p class="lead text-muted">Создайте свою коллекцию, как сделал это я - создатель. </p>
+        <p>
+          <form method="post" enctype="multipart/form-data" action="{% url 'image-upload' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button  class="btn btn-primary my-2" type="submit"> Добавить  </button>
+          </form>
+          <div class="col-lg-4 col-md-8 mx-auto ">
+            <form class="d-flex" role="search" method="post"  action="{% url 'tag-search' %}">
               {% csrf_token %}
-              {% if img_obj %}
-            <h3>Успешно загружено : {{img_obj.title}}</h3>
-          </section>
-
-                <div class="album py-5 bg-light">
-                <div class="container">
-
-                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                      {% for img_obj in img_all %}
-                    <div class="col">
-
-                      <div class="card shadow-sm">
-
-                                <rect width="100%" height="100%" fill="#55595c">
-                                </rect>
-                         <img src="{{ img_obj.image.url}}" alt="connect">
-                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{img_obj.title}}</text>
-
-
-
-                            </svg>
-
-                          <div class="card-body">
-
-                              <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-
-                                </div>
-                                <small class="text-muted"><font style="vertical-align: inherit;">{{img_obj.id}}</font></small>
-                         </div>
-                     </div>
-
-                    </div>
-
-                    </div>
-        {% endfor %}
-        {% endif %}
-            </div>
-
+              {{ search_form.as_p }}
+              <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+            </form>
           </div>
-
-         </div>
-
-
-        </div>
-
-
-    </main>
-{% endblock %}
-
-
-
-
-
-
-<a href="#" class="btn btn-primary my-2"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Основной призыв к действию</font></font></a>
-
-__________________________________________________________________________________________________________________________________________________________________
-
-{% extends 'main/based.html' %}
-
-
-{% block title %}
-Страница поиска
-{% endblock %}
-
-
-
-{% block content %}
-    {% if searched %}
-
-        <section class="py-5 text-center container">
-            <div class="row py-lg-5">
-              <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light"><font style="vertical-align: inherit;">Вы ищите {{searched}}...</font></h1>
-              </div>
-            </div>
-        </section>
-                <div class="album py-5 bg-light">
-                 <div class="container">
-                   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          {% for el in img_all %}
-            {% if searched == el.tags %}
-                    <div class="col">
-
-                      <div class="scale card shadow-sm">
-                                <rect width="100%" height="100%" fill="#55595c">
-                                </rect>
-                                <img src="{{ el.image.url}}" alt="connect">
-                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{searched.title}}</text>
-
-
-
-                            </svg>
-
-                          <div class="scale card-body">
-
-                              <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                  <form class="d-flex" role="search" method="post" action="{% url 'delete' todo_id=el.id%}">
-                                    {% csrf_token %}
-                                     <input id="submit" type="button" value="Delete" class="btn btn-sm btn-outline-secondary"><font style="vertical-align: inherit;">Удалить</font></button>
-                                  </form>
-                                </div>
-                                <small class="text-muted"><font style="vertical-align: inherit;">{{img_obj.id}}</font></small>
-                         </div>
-                     </div>
-
-                    </div>
-
-                    </div>
-            {% endif %}
-            {% endfor %}
-
-            {% else %}
-                <center>
-                    <h1 class="fw-light"><font style="vertical-align: inherit;">Ошибка поиска. Того что вы ищите нет.</font></h1>
-                </center>
-            {% endif %}
-
-       </div>
+        </p>
       </div>
     </div>
-
-
-
-
-
-
-
-
-
+<!--    <a href="#">Загрузить</a>-->
+      {% if img_all %}
+        {% if img_obj %}
+          <h3>Успешно загружено : {{img_obj.title}}</h3>
+        {% endif %}
+  </section>
+    <div class="album py-5 bg-light">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {% for img_obj in img_all %}
+            <div class="col">
+              <div class="scale card shadow-sm">
+                <rect width="100%" height="100%" fill="#55595c"></rect>
+                <img src="{{ img_obj.image.url}}" alt="connect">
+                <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{img_obj.title}}</text>
+                </svg>
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <small class="text-muted">{{img_obj.id}}</small>
+                      <a class="btn btn-sm btn-outline-secondary" href="{% url 'delete' img_obj.id  %}">Удалить</a>
+                      <a class="btn btn-sm btn-outline-secondary" href="{% url 'image-edit' img_obj.id  %}">Редактировать</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+      {% else %}
+        <p class="lead text-muted">У вас не заполнена галерея</p>
+      {% endif %}
+        </div>
+      </div>
+    </div>
+</main>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{    # if request.method == 'POST':
-    #     searched = request.POST.get('searched', False)
-    #     flag_list = searched.split()
-    #     for item in flag_list:
-    #         tag = Image.objects.filter(tags__contains=item)
-    #         context = {'searched': searched,  'tag': tag}
-    #     return render(request, 'main/tag_search.html', context)}}

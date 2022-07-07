@@ -18,6 +18,7 @@
           </svg>
           <strong>Web-Gallery</strong>
         </a>
+        {% block headers %}{% endblock %}
       </div>
       <style>
         .scale {
@@ -33,9 +34,16 @@
     </div>
     <footer class="text-muted py-5">
       <div class="container">
-        <p class="float-end mb-1">
-          <a href="#">Вернуться к вершине</a>
-        </p>
+        <a href="#">
+          <p class="float-end mb-1 btn btn-sm btn-outline-secondary">
+            Вернуться к вершине
+          </p>
+        </a>
+        <a  href="/">
+          <p class="mb-1 btn btn-sm btn-outline-secondary">
+            Вернуться в галерею
+          </p>
+        </a>
       </div>
     </footer>
   </body>

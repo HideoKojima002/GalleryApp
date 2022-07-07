@@ -8,42 +8,47 @@
 
 
 {% block content %}
-  {% if searched %}
-    <section class="py-5 text-center container">
-      <div class="row py-lg-5">
-        <div class="col-lg-6 col-md-8 mx-auto">
-          <h1 class="fw-light">Вы ищите {{searched}}...</h1>
+  <main xmlns="http://www.w3.org/1999/html">
+    {% if searched %}
+      <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+          <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Вы ищите {{searched}}...</h1>
+          </div>
         </div>
-      </div>
-    </section>
-      <div class="album py-5 bg-light">
-        <div class="container">
-         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-           {% for el in tag %}
-             <div class="col">
-               <div class="scale card shadow-sm">
-                 <rect width="100%" height="100%" fill="#55595c">
-                 </rect>
-                 <img src="{{ el.image.url}}" alt="connect">
-                   <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{el.title}}</text>
-                 </svg>
-                 <div class="card-body">
-                   <div class="d-flex justify-content-between align-items-center">
-                     <div class="btn-group">
-  <!--                 <button type="button" class="btn btn-sm btn-outline-secondary"><font style="vertical-align: inherit;">Удалить</font></button>-->
-                     </div>
-                   <small class="text-muted">{{img_obj.id}}</small>
-                 </div>
-               </div>
-             </div>
-           </div>
-         {% endfor %}
-  {% else %}
-    <center>
-      <h1 class="fw-light">Ошибка поиска. Того что вы ищите нет.</h1>
-    </center>
-  {% endif %}
+      </section>
+        <div class="album py-5 bg-light">
+          <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+              {% for el in tag %}
+                <div class="col">
+                  <div class="scale card shadow-sm">
+                    <a href="{% url 'picture-page' el.id  %}">
+                      <rect width="100%" height="100%" fill="#55595c" ></rect>
+                      <img  width="100%" height="100%" fill="#55595c" src="{{ el.image.url}}" alt="connect" href="{% url 'picture-page' el.id  %}" >
+                    </a>
+                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{el.title}}</text>
+                    </svg>
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+
+                        <div class="btn-group">
+                          <a class="btn btn-sm btn-outline-secondary" href="{% url 'delete' el.id  %}">Удалить</a>
+                          <a class="btn btn-sm btn-outline-secondary" href="{% url 'image-edit' el.id  %}">Редактировать</a>
+                        </div>
+                        <small class="text-muted">{{el.id}}</small>     <!--     Кинуть id на строку 33             -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+    {% else %}
+      <center>
+        <h1 class="fw-light">Ошибка поиска. Того что вы ищите нет.</h1>
+      </center>
+    {% endif %}
+  </main>
 {% endblock %}
