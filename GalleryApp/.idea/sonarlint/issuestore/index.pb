@@ -25,7 +25,9 @@ W
 requirements.txt,1\9\19359a61ae2446b51b549167b014da2fcf265768
 E
 gallery/main/admin.py,9\e\9e9ef88cbf6ddb8d675519ff63210b31fe90a448
+K
+gallery/gallery/settings.py,0\9\09f24a3c4868e3d77b4fec668e989b1e6e1c6aa6
+D
+gallery/main/urls.py,b\7\b7072c7b5b86c0fa0960a1dc195e0b2f3e0db9be
 U
 %gallery/main/templates/main/test.html,b\3\b35aa75f6d0c3dceb61bb4b0fde48c761b4a2057
-V
-&gallery/main/templates/main/based.html,5\8\587ab5c25d4355d2816cbd43d20c9759aebe132c

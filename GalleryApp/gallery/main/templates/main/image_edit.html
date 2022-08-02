@@ -13,7 +13,11 @@
       <div class="row py-lg-5">
         <div class="col-lg-7 col-md-8 mx-auto">
           <h1 class="fw-light"> Редактируй </h1>
-          <p class="lead text-muted">Tags:  {{img.tag}}{{img.tags_}}</p>
+          <p class="lead text-muted">Tags: {{ tags|join:", " }}
+{#            {% for tag in img.tags.all %}#}
+{#              {{ tag.name }}{% if not forloop.last %},{% endif %}#}
+{#            {% endfor %}#}
+          </p>
           <p class="lead text-muted">Name: {{img.title}}</p>
         </div>
         <form method="post" enctype="multipart/form-data" action="">
@@ -37,4 +41,13 @@
         </div>
       </div>
   </main>
+{% endblock %}
+
+
+{% block ButtonBack %}
+        <a  href="/">
+          <p class="mb-1 btn btn-sm btn-outline-secondary">
+            Вернуться в галерею
+          </p>
+        </a>
 {% endblock %}
