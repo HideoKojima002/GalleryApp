@@ -1,5 +1,6 @@
+import os
+import pymysql
 from pathlib import Path
-import os, pymysql
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -14,8 +15,7 @@ SECRET_KEY = 'django-insecure-t&%!&ld&0$g7qq7q^-nwjmc6%9qs(*%)f_sg@y3zf8)seb&grn
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []                      # '127.0.0.1'
 
 
 # Application definition
@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django',
+    'captcha',
     'main',
 ]
 
@@ -86,15 +87,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 5,
+        }
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -111,11 +114,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CAPTCHA_LETTER_ROTATION = (-60, 60)
+
+CAPTCHA_BACKGROUND_COLOR = '#6500FF'
+
+CAPTCHA_FOREGROUND_COLOR = '#000110'
+
+CAPTCHA_FONT_SIZE = 50
+
+CAPTCHA_LENGTH = 5
 
 
 # Default primary key field type

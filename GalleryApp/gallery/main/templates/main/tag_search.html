@@ -29,14 +29,21 @@
                     </a>
                     <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{el.title}}</text>
                     <div class="card-body">
-                      <div class="d-flex justify-content-between align-items-center">
-
-                        <div class="btn-group">
-                          <a class="btn btn-sm btn-outline-secondary" href="{% url 'delete' el.id  %}">Удалить</a>
-                          <a class="btn btn-sm btn-outline-secondary" href="{% url 'image-edit' el.id  %}">Редактировать</a>
-                        </div>
-                        <small class="text-muted">{{el.id}}</small>     <!--     Кинуть id на строку 33             -->
-                      </div>
+                     <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">{{el.author}}
+                      <div class="">{{el.id}}</div>
+                    </small>
+                      {% if request.user.is_authenticated %}
+                        {% if request.user.is_superuser or img_obj.author_id == request.user.id %}
+                          <div class="btn-group">
+                            <a class="btn btn-sm btn-outline-secondary" href="{% url 'delete' el.id %}">Удалить</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="{% url 'image-edit' el.id %}">Редактировать</a>
+                          </div>
+                        {% else %}
+                          <div class="btn-group"></div>
+                        {% endif %}
+                      {% endif %}
+                  </div>
                     </div>
                   </div>
                 </div>

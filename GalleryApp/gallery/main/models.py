@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -14,6 +15,7 @@ class Image(models.Model):
     title = models.CharField('Название', max_length=200)
     image = models.ImageField(upload_to='images')
     tags = models.ManyToManyField('Tag')
+    author = models.ForeignKey(User, related_name='author', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

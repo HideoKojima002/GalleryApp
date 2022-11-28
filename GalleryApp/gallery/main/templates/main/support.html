@@ -1,0 +1,74 @@
+{% extends 'main/based.html' %}
+
+
+{% block title %}
+О нас
+{% endblock %}
+
+{% block styles %}
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+{% endblock %}
+
+{% block content %}
+  <main class="form-signin">
+    <div class="row py-lg-5">
+      <h1 class="h3 mb-3 fw-normal text-center">Помощь</h1>
+      <div class="col-lg-7 col-md-8 mx-auto">
+        <ul class="list-group list-group-flush">
+          <oi>
+            <li class="list-group-item"><h1 class="h3 mb-3 fw-normal text-center">Как загрузить изображение?</h1>
+              Чтобы загрузить нужно зарегистрироваться, нажать на главной странице кнопку "Загрузить изображение в галерею" и заполнить поля. После данных действий нажмите кнопку "Добавить".
+            </li>
+             <li class="list-group-item"><h1 class="h3 mb-3 fw-normal text-center">Поиск не работает?</h1>
+              Поиск осуществляется по "тегам" изображения, не по именам.
+            </li>
+             <li class="list-group-item"><h1 class="h3 mb-3 fw-normal text-center">Не могу войти!</h1>
+              Чтобы загрузить нужно зарегистрироваться, нажать на главной странице кнопку "Загрузить изображение в галерею" и заполнить поля. После данных действий нажмите кнопку "Добавить".
+            </li>
+             <li class="list-group-item"><h1 class="h3 mb-3 fw-normal text-center">Пропала функция удаления и редактирования изображения!</h1>
+              Чтобы загрузить нужно зарегистрироваться, нажать на главной странице кнопку "Загрузить изображение в галерею" и заполнить поля. После данных действий нажмите кнопку "Добавить".
+            </li>
+             <li class="list-group-item"><h1 class="h3 mb-3 fw-normal text-center">Не могу зарегистрироваться!</h1>
+              Чтобы загрузить нужно зарегистрироваться, нажать на главной странице кнопку "Загрузить изображение в галерею" и заполнить поля. После данных действий нажмите кнопку "Добавить".
+            </li>
+            <li class="list-group-item"><h1 class="h3 mb-3 fw-normal text-center">Как загрузить изображение?</h1>
+              Чтобы загрузить нужно зарегистрироваться, нажать на главной странице кнопку "Загрузить изображение в галерею" и заполнить поля. После данных действий нажмите кнопку "Добавить".
+            </li>
+            <li class="list-group-item"><h1 class="h3 mb-3 fw-normal text-center">Остались вопросы?</h1>
+              Если вас что-то интересует, можете с нами связаться на прямую <a href="{% url 'contact' %}">hideokojima002@gmail.com</a>
+            </li>
+          </oi>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+
+
+<!--    <div class="form-floating">-->
+<!--      <input type="password" class="form-control" id="floatingPassword" placeholder="Пароль">-->
+<!--      <label for="floatingPassword">Пароль</label>-->
+<!--    </div>-->
+<!--    <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>-->
+
+{% endblock %}
+
+{% block ButtonBack %}
+        <a  href="/">
+          <p class="mb-1 btn btn-sm btn-outline-secondary">
+            Вернуться в галерею
+          </p>
+        </a>
+{% endblock %}

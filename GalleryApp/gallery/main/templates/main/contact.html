@@ -1,0 +1,61 @@
+{% extends 'main/based.html' %}
+
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+{% block styles %}
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+{% endblock %}
+
+{% block content %}
+  <main class="text-center form-signin">
+    <div class="row py-lg-5">
+      <h1 class="h3 mb-3 fw-normal">Обратная связь</h1>
+      <div class="col-lg-5 col-md-8 mx-auto">
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-error">{{ form.non_field_errors }}</div>
+          {% for f in form %}
+            <div class="form-floating">
+              {{ f }}
+              <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }} </label>
+              <div class="form-error">{{ f.errors }}</div>
+            </div>
+          {% endfor %}
+          <button  class="btn  btn-lg btn-primary my-2" type="submit"> Отправить </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+
+
+<!--    <div class="form-floating">-->
+<!--      <input type="password" class="form-control" id="floatingPassword" placeholder="Пароль">-->
+<!--      <label for="floatingPassword">Пароль</label>-->
+<!--    </div>-->
+<!--    <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>-->
+
+{% endblock %}
+
+{% block ButtonBack %}
+        <a  href="/">
+          <p class="mb-1 btn btn-sm btn-outline-secondary">
+            Вернуться в галерею
+          </p>
+        </a>
+{% endblock %}

@@ -12,19 +12,25 @@
     <section class="py-5 text-center container">
       <div class="row py-lg-5">
         <div class="col-lg-7 col-md-8 mx-auto">
-          <h1 class="fw-light"> Редактируй </h1>
-          <p class="lead text-muted">Tags: {{ tags|join:", " }}
-{#            {% for tag in img.tags.all %}#}
-{#              {{ tag.name }}{% if not forloop.last %},{% endif %}#}
-{#            {% endfor %}#}
-          </p>
-          <p class="lead text-muted">Name: {{img.title}}</p>
+          <h1 class="fw-light py-4"> Редактируй </h1>
+<!--          <p class="lead text-muted">Tags: {{ tags|join:", " }}-->
+<!--{#            {% for tag in img.tags.all %}#}-->
+<!--{#              {{ tag.name }}{% if not forloop.last %},{% endif %}#}-->
+<!--{#            {% endfor %}#}-->
+<!--          </p>-->
+<!--          <p class="lead text-muted">Name: {{img.title}}</p>-->
+          <form method="post" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+            <div class="form-error">{{ form.non_field_errors }}</div>
+              {% for f in form %}
+              <div class="form-floating">
+                {{ f }}
+                <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }} </label>
+              </div>
+              {% endfor %}
+            <button  class="btn btn-primary my-2" type="submit"> Изменить  </button>
+          </form>
         </div>
-        <form method="post" enctype="multipart/form-data" action="">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button  class="btn btn-primary my-2" type="submit"> Изменить  </button>
-        </form>
       </div>
     </section>
       <div class="card shadow-sm">

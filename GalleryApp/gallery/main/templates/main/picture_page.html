@@ -13,14 +13,21 @@
       <div class="row py-lg-5">
         <div class="col-lg-7 col-md-8 mx-auto">
           <h1 class="fw-light"> {{img.title}} </h1>
+          <p class="lead text-muted">Теги: {{ tags|join:", " }}
+{#            {% for tag in img.tags.all %}#}
+{#              {{ tag.name }}{% if not forloop.last %},{% endif %}#}
+{#            {% endfor %}#}
+          </p>
+          <p class="lead text-muted">Автор: {{ img.author }}
+          </p>
         </div>
       </div>
     </section>
-      <div class="align-items-center card shadow-sm">
+      <div class="card shadow-sm">
         <a href="{{ img.image.url}}">
           <rect width="100%" height="100%" fill="#55595c" ></rect>
           <img  width="100%" height="100%" fill="#55595c" src="{{ img.image.url}}" alt="connect" href="{% url 'picture-page' img.id  %}" ></a>
-        <text class="" x="50%" y="50%" fill="#eceeef" dy=".3em">{{img.title}}</text>
+        <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{img.title}}</text>
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
             <small class="text-muted">{{img.id}}</small>

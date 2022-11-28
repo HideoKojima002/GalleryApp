@@ -5,11 +5,33 @@
 Главная страница
 {% endblock %}
 
+
+{% block styles %}
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+{% endblock %}
+
+
 {% block headers %}
-  <div class="  mx-0 ">
-    <form class="d-flex" role="search" method="get"  action="{% url 'tag-search_2' %}">
-      {{ search_form.as_p }}
-      <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+<!-- main-menu-search bs-flex-grow-1 bs-d-none bs-d-sm-flex -->
+  <div class="mx-4 ">
+    <form class="d-flex" role="search" method="get"  action="{% url 'tag-search-2' %}">
+      <div class="form-floating">
+        {{ search_form.as_p }}
+        <label class="form-label" for="{{ search_form.id_for_label }}"> {{ search_form.label }} </label>
+      </div>
+      <!--      <button class="btn btn-outline-secondary p-2" type="submit">Поиск</button>-->
     </form>
   </div>
 {% endblock %}
@@ -23,11 +45,16 @@
         <h1 class="fw-light"> Галерея</h1>
         <p class="lead text-muted">Создайте свою коллекцию, как сделал это я - создатель. </p>
         <p>
-          <form method="post" enctype="multipart/form-data" action="{% url 'image-upload' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button  class="btn btn-primary my-2" type="submit"> Добавить  </button>
-          </form>
+          {% if request.user.is_authenticated %}
+             <a  class="btn btn-primary my-2 " href="{% url 'image-upload' %}" type="submit">
+               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-cloud-arrow-up  me-2" viewBox="0 0 20 16">
+                 <path fill-rule="evenodd" d="M7.646 5.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2z"/>
+                 <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383zm.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z"/>
+               </svg> Добавить изображение в галерею </a>
+          {%else%}
+               <a  class="btn btn-primary my-2 " href="{% url 'login' %}" aria-disabled="true" type="submit">
+                  Войдите чтобы добавить изображение в галерею </a>
+        {% endif %}
           <div class="col-lg-4 col-md-8 mx-auto ">
             <!-- Место для поиска -->
           </div>
@@ -52,11 +79,20 @@
                 <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{img_obj.title}}</text>
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center">
-                    <small class="text-muted">{{img_obj.id}}</small>
-                    <div class="btn-group">
-                      <a class="btn btn-sm btn-outline-secondary" href="{% url 'delete' img_obj.id  %}">Удалить</a>
-                      <a class="btn btn-sm btn-outline-secondary" href="{% url 'image-edit' img_obj.id  %}">Редактировать</a>
-                    </div>
+                    <small class="text-muted">{{img_obj.author}}
+                      <div class="">{{img_obj.id}}</div>
+                    </small>
+                      {% if request.user.is_authenticated %}
+                        {% if request.user.is_superuser or img_obj.author_id == request.user.id %}
+                          <div class="btn-group">
+                            <a class="btn btn-sm btn-outline-secondary" href="{% url 'delete' img_obj.id %}">Удалить</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="{% url 'image-edit' img_obj.id %}">Редактировать</a>
+                          </div>
+                        {% else %}
+                          <div class="btn-group"></div>
+                        {% endif %}
+                      {% endif %}
+
                   </div>
                 </div>
               </div>
