@@ -211,7 +211,7 @@ class ContactFormView(FormView):
     template_name = 'main/contact.html'
     success_url = reverse_lazy('index')
 
-    def form_valid(self, form):          # Работа с шаблоном сообщения на почту.
+    def form_valid(self, form):          # Работа с шаблоном сообщения на почту, но без сторонних программ никак.
         print(form.cleaned_data)
         subject = f"Communication with the client - {form.cleaned_data['first_name']}"
         body = {
