@@ -1,0 +1,12 @@
+
+spython:S1192‰"UDefine a constant instead of duplicating this literal 'main/tag_search.html' 3 times.(®Æôüÿÿÿÿ
+mpython:S1192D"PDefine a constant instead of duplicating this literal 'main/index.html' 3 times.(Ëø´¡ûÿÿÿÿ
+Lpython:S10664"/Merge this if statement with the enclosing one.(Ã“¹èùÿÿÿÿ
+dpython:S2208"GImport only needed names or import the module and then use its members.(ĞŸÁ½ıÿÿÿÿ
+dpython:S2208"GImport only needed names or import the module and then use its members.(é£œıÿÿÿÿ
+dpython:S2208"GImport only needed names or import the module and then use its members.(½Ãêùÿÿÿÿÿ
+dpython:S2208"GImport only needed names or import the module and then use its members.(ÅÙï„úÿÿÿÿ
+npython:S1226("QIntroduce a new variable or use its initial value before reassigning 'rand_name'.(»ç”âüÿÿÿÿ
+=python:S1481+"%Remove the unused local variable "i".(
+lpython:S3776\"TRefactor this function to reduce its Cognitive Complexity from 23 to the 15 allowed.(¼şúÏ
+Jpython:S1481»",Remove the unused local variable "img_user".(ø°‘üÿÿÿÿ

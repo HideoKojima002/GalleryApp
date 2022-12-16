@@ -22,7 +22,7 @@ class Image(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField('Название', max_length=200)
+    name = models.CharField('Название', max_length=200)     # Можно попробовать это Field.unique для уникальности
 
     def __str__(self):
         return self.name

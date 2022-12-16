@@ -1,3 +1,6 @@
+import secrets
+import string
+
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -10,8 +13,11 @@ from django.views.generic import CreateView, FormView
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 
+from string import *
+from random import *
 from .forms import *
 from .models import *
+from secrets import choice
 from django.db.models import Q
 
 
@@ -31,13 +37,22 @@ def context_func(form_opt=ImageForm(), search_opt=SearchForm()):
     return context
 
 
-@login_required(redirect_field_name='my_redirect_field')
+def rand_filename(rand_name):
+    letters_and_digits = '_' + string.ascii_letters + string.digits
+    rand_name = ''.join(secrets.choice(
+        letters_and_digits) for i in range(random.randint(16, 50)))
+    return rand_name
+
+
+@login_required(redirect_field_name='my_redirect_field',
+                login_url='main/login.html')
 def image_upload(request):
     form = ImageForm(request.POST, request.FILES)
     if request.method == 'POST':
         if form.is_valid():
             img_user = form.save(commit=False)
             img_user.author = request.user
+            # img_user.filename += rand_filename(img_user.filename)
             img_user.save()
             image = form.save()
             tags = form.cleaned_data['tags_']
@@ -46,21 +61,23 @@ def image_upload(request):
                     tag, created = Tag.objects.get_or_create(name=tag)
                     image.tags.add(tag)
             return redirect('index')
-    else:
-        return render(request, 'main/image_upload.html', context_func())
+    return render(request, 'main/image_upload.html', context_func(form_opt=form))
 
 
 def index(request):
     return render(request, 'main/index.html', context_func())
 
 
-@login_required(redirect_field_name='my_redirect_field')
+@login_required(redirect_field_name='my_redirect_field',
+                login_url='main/login.html')
 def delete(request, img_id):
     img = get_object_or_404(Image, id=img_id)
-    img.delete()
+    if request.user.is_superuser or img.author == request.user:
+        img.delete()
     return redirect('index')
 
 
+# TODO:
 # @login_required(redirect_field_name='my_redirect_field')
 # def delete(request, img_id):
 #     img = get_object_or_404(Image, id=img_id)
@@ -70,34 +87,37 @@ def delete(request, img_id):
 #     return redirect('index')
 
 
-@login_required(redirect_field_name='my_redirect_field')
+@login_required(redirect_field_name='my_redirect_field',
+                login_url='main/login.html')
 def image_edit(request, img_id):
     img = get_object_or_404(Image, id=img_id)
     # img = Image.objects.get(id=img_id)
-    form = ImageForm(request.POST or None, request.FILES or None, instance=img)   # , request.FILES,
-    if form.is_valid():
-        # image_old = get_object_or_404(Image, id=img_id)
-        # old_tags = {tag.name for tag in image_old.tags.all()}
-        image = form.save()
-        tags = form.cleaned_data['tags_']
-        if tags:
-            # new_tags = {tag for tag in tags.split(' ')}
-            for tag in tags.split(' '):
-                tag, created = Tag.objects.get_or_create(name=tag)
-                image.tags.add(tag)
-            for tag in image.tags.all():
-                if tag.name not in tags:
-                    image.tags.remove(tag)
-        else:
-            image.tags.clear()
+    if request.user.is_superuser or img.author == request.user:
+        form = ImageForm(request.POST or None, request.FILES or None, instance=img)   # , request.FILES,
+        if form.is_valid():
+            # image_old = get_object_or_404(Image, id=img_id)
+            # old_tags = {tag.name for tag in image_old.tags.all()}
+            image = form.save()
+            tags = form.cleaned_data['tags_']
+            if tags:
+                # new_tags = {tag for tag in tags.split(' ')}
+                for tag in tags.split(' '):
+                    tag, created = Tag.objects.get_or_create(name=tag)
+                    image.tags.add(tag)
+                for tag in image.tags.all():
+                    if tag.name not in tags:
+                        image.tags.remove(tag)
+            else:
+                image.tags.clear()
 
-        return redirect('index')
-    context = {
-        'form': form,
-        'img': img,
-        'tags': [tag.name for tag in img.tags.all()]
-    }
-    return render(request, 'main/image_edit.html', context)
+            return redirect('index')
+        context = {
+            'form': form,
+            'img': img,
+            'tags': [tag.name for tag in img.tags.all()]
+        }
+        return render(request, 'main/image_edit.html', context)
+    return redirect('index')
 
 
 # @require_http_methods(["POST"])
@@ -172,6 +192,21 @@ def picture_page(request, img_id):
         'tags': [tag.name for tag in img.tags.all()]
     }
     return render(request, 'main/picture_page.html', context)
+
+
+def by_authors(request, img_id):
+    img = get_object_or_404(Image, id=img_id)
+    form = ImageForm()
+    author = img.author
+    img_all = Image.objects.filter(author=author)
+    context = {
+        # 'img_user': img_user,
+        'form': form,
+        'img_all': img_all,
+        'img': img,
+        'author': author,
+    }
+    return render(request, 'main/by_authors.html', context)
 
 
 def about_us(request):
