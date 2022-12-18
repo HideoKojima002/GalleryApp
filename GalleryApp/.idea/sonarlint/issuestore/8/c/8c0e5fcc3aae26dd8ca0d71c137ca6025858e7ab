@@ -1,4 +1,4 @@
 
-cpython:S1192Q"KDefine a constant instead of duplicating this literal 'Ð›Ð¾Ð³Ð¸Ð½' 4 times.(µ”…™
 epython:S1192Y"MDefine a constant instead of duplicating this literal 'ÐŸÐ°Ñ€Ð¾Ð»ÑŒ' 4 times.(Ï©‹Ì
+cpython:S1192Q"KDefine a constant instead of duplicating this literal 'Ð›Ð¾Ð³Ð¸Ð½' 4 times.(µ”…™
 dpython:S2208"GImport only needed names or import the module and then use its members.(ÅÙï„úÿÿÿÿ

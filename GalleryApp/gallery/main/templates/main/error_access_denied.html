@@ -1,0 +1,33 @@
+{% extends 'main/based.html' %}
+
+
+{% block title %}
+Отказано в доступе
+{% endblock %}
+
+
+{% block content %}
+  <main class="form-signin">
+    <div class="py-5 text-center container">
+      <div class="list-group-item row py-lg-5 row py-lg-5">
+        <h1 class="h3 mb-3 fw-normal text-center">ERROR-403</h1>
+        <div class="col-lg-4 col-md-8 mx-auto">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <p class="text-center"> Вам отказано в доступе.</p>
+              <p class="text-center"> Постарайтесь в следующий раз не присваивать себе чужие права.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+
+{% block ButtonBack %}
+        <a  href="/">
+          <p class="mb-1 btn btn-sm btn-outline-secondary">
+            Вернуться в галерею
+          </p>
+        </a>
+{% endblock %}

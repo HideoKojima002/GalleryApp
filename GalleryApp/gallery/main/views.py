@@ -5,6 +5,7 @@ from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.views import LoginView
+from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -74,7 +75,9 @@ def delete(request, img_id):
     img = get_object_or_404(Image, id=img_id)
     if request.user.is_superuser or img.author == request.user:
         img.delete()
-    return redirect('index')
+        return redirect('index')
+    context = {'error': 'Вы не можете продолжить, у вас недостаточно прав'}
+    return render(request, 'main/error_access_denied.html', context, status=403)
 
 
 # TODO:
@@ -117,7 +120,8 @@ def image_edit(request, img_id):
             'tags': [tag.name for tag in img.tags.all()]
         }
         return render(request, 'main/image_edit.html', context)
-    return redirect('index')
+    context = {'error': 'Вы не можете продолжить, у вас недостаточно прав'}
+    return render(request, 'main/error_access_denied.html', context, status=403)
 
 
 # @require_http_methods(["POST"])
@@ -246,8 +250,8 @@ class ContactFormView(FormView):
     template_name = 'main/contact.html'
     success_url = reverse_lazy('index')
 
-    def form_valid(self, form):          # Работа с шаблоном сообщения на почту, но без сторонних программ никак.
-        print(form.cleaned_data)
+    def form_valid(self, form):          # Работа с шаблоном сообщения на почту
+        # print(form.cleaned_data)
         subject = f"Communication with the client - {form.cleaned_data['first_name']}"
         body = {
             'first_name': form.cleaned_data['first_name'],
