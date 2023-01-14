@@ -55,7 +55,7 @@
                 <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{img_obj.title}}</text>
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center">
-                    <small class="text-muted"> <a class="link-dark" href="{% url 'by-authors' img_id=img_obj.id %}">{{img_obj.author}}</a>
+                    <small class="text-muted"> <a class="link-dark" href="{% url 'by-authors' user_id=img_obj.author.id %}">{{img_obj.author}}</a>
                       <div class="">{{img_obj.id}}</div>
                     </small>
                       {% if request.user.is_authenticated %}

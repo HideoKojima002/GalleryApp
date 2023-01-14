@@ -10,7 +10,7 @@ class ImageForm(forms.ModelForm):
     tags_ = forms.CharField(label='Тeги', required=False,
                             widget=forms.TextInput(
                                 attrs={
-                                    'class': 'form-control text-lowercase',
+                                    'class': 'form-control',     # text-lowercase
                                     'id': 'floatingInput',
                                     # 'type': 'text',
                                     'placeholder': 'Тeги',
@@ -60,7 +60,7 @@ class SearchForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Поиск по тегу',
-                'class': 'form-control form-control-lg text-lowercase',
+                'class': 'form-control form-control-lg',     # text-lowercase
                 'id': 'floatingInput',
             }
         )

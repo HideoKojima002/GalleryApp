@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_http_methods
 from django.views.generic import CreateView, FormView
@@ -26,6 +26,8 @@ def context_func(form_opt=ImageForm(), search_opt=SearchForm()):
     search_form = search_opt
     img_all = Image.objects.all()
     form = form_opt
+    # count = 0
+
     # menu = [{'title': "O нас", 'url_name': "about-us"},
     #         {'title': "O нас", 'url_name': "about-us"}
     # ]
@@ -33,6 +35,8 @@ def context_func(form_opt=ImageForm(), search_opt=SearchForm()):
         'form': form,
         'search_form': search_form,
         'img_all': img_all,
+        # 'count': count,
+
     }
 
     return context
@@ -188,7 +192,7 @@ def picture_page(request, img_id):
     img = get_object_or_404(Image, id=img_id)
     form = ImageForm()
     # img_user = img.author
-    img_user = request.user.id
+    # img_user = request.user.id
     context = {
         # 'img_user': img_user,
         'form': form,
@@ -198,13 +202,12 @@ def picture_page(request, img_id):
     return render(request, 'main/picture_page.html', context)
 
 
-def by_authors(request, img_id):
-    img = get_object_or_404(Image, id=img_id)
+def by_authors(request, user_id):
+    img = Image(author_id=user_id)     # Я бы сделал через get_object_or_404 но выходит ошибка количества: MultipleObjectsReturned: get() returned more than one Image -- it returned 5!
     form = ImageForm()
     author = img.author
     img_all = Image.objects.filter(author=author)
     context = {
-        # 'img_user': img_user,
         'form': form,
         'img_all': img_all,
         'img': img,
