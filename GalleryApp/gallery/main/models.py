@@ -14,6 +14,7 @@ from django.db import models
 
 
 class Image(models.Model):
+    # id_img = models.UUIDField(default=uuid.uuid4, editable=False)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField('Название', max_length=200)
     image = models.ImageField(upload_to='images')
