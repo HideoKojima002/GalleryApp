@@ -24,7 +24,8 @@ from django.db.models import Q
 
 def context_func(form_opt=ImageForm(), search_opt=SearchForm()):
     search_form = search_opt
-    img_all = Image.objects.all()
+    img_all = Image.objects.all().order_by('time_img', 'time_img')
+    # img_all = Image.objects.all()
     form = form_opt
     # count = 0
 
@@ -84,7 +85,6 @@ def delete(request, img_id):
     return render(request, 'main/error_access_denied.html', context, status=403)
 
 
-# TODO:
 # @login_required(redirect_field_name='my_redirect_field')
 # def delete(request, img_id):
 #     img = get_object_or_404(Image, id=img_id)
@@ -206,7 +206,7 @@ def by_authors(request, user_id):
     img = Image(author_id=user_id)     # Я бы сделал через get_object_or_404 но выходит ошибка количества: MultipleObjectsReturned: get() returned more than one Image -- it returned 5!
     form = ImageForm()
     author = img.author
-    img_all = Image.objects.filter(author=author)
+    img_all = Image.objects.filter(author=author).order_by('time_img', 'time_img')
     context = {
         'form': form,
         'img_all': img_all,
