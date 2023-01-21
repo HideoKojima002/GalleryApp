@@ -17,6 +17,7 @@ urlpatterns = [
     path('image_upload/', image_upload, name='image-upload'),
     path('contact/', ContactFormView.as_view(), name='contact'),
     path('by_authors/<int:user_id>', by_authors, name='by-authors'),
+    path('like_image/<str:img_id>', like_image, name='like-image'),
 ]
 
 # class DataMinix:

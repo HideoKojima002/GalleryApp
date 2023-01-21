@@ -24,7 +24,7 @@ from django.db.models import Q
 
 def context_func(form_opt=ImageForm(), search_opt=SearchForm()):
     search_form = search_opt
-    img_all = Image.objects.all().order_by('time_img', 'time_img')
+    img_all = Image.objects.all().order_by('time_img', 'date_img')
     # img_all = Image.objects.all()
     form = form_opt
     # count = 0
@@ -227,6 +227,18 @@ def support(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+
+@login_required(redirect_field_name='my_redirect_field',
+                login_url='main/login.html')
+def like_image(request, img_id):
+    img = get_object_or_404(Image, id=img_id)
+    if request.user in img.likes.all():
+        img.likes.remove(request.user)
+        img.save()
+    else:
+        img.likes.add(request.user.id)
+    return redirect('index')
 
 
 class RegisterUser(CreateView):
