@@ -21,21 +21,26 @@ class ImageForm(forms.ModelForm):
                                  attrs={
                                      'class': 'form-control-lg',
                                      'placeholder': 'Изображение',
-                                 }
-                             ))
-    title = forms.CharField(
-        label='Название',
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'Название',
-                'class': 'form-control',
-                'id': 'floatingInput',
-            }
-        ))
+                                 }))
+    title = forms.CharField(label='Название',
+                            widget=forms.TextInput(
+                                attrs={
+                                    'placeholder': 'Название',
+                                    'class': 'form-control',
+                                    'id': 'floatingInput',
+                                }))
+    privacy_img = forms.BooleanField(label='Скрыть для всех', required=False,
+                                     widget=forms.CheckboxInput(
+                                         attrs={
+                                             'class': 'form-check-input',
+                                             'type': 'checkbox',
+                                             'id': 'flexSwitchCheckDefault',
+                                         }
+                                     ))
 
     class Meta:
         model = Image
-        fields = ('title', 'image', 'tags_')
+        fields = ('title', 'image', 'tags_', 'privacy_img')
 
     def __init__(self, *args, **kwargs):
         instance = kwargs.get('instance')
@@ -43,7 +48,6 @@ class ImageForm(forms.ModelForm):
         if instance:
             tags = instance.tags.values_list('name', flat=True)
             self.fields['tags_'].initial = ' '.join(tags)
-
 
             # tags = ''
             # for tag in instance.tags.all():

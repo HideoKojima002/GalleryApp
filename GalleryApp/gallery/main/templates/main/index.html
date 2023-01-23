@@ -51,7 +51,9 @@
       <div class="col-lg-7 col-md-8 mx-auto">
         <h1 class="fw-light"> Галерея</h1>
         {% if img_all %}
-          <p class="lead text-muted">Создайте свою коллекцию, как сделал это я - создатель. Изображений всего - {{img_all.count}} </p>
+          <div class="container"  >
+            <p class="lead text-muted">Создайте свою коллекцию, как сделал это я - создатель.<br>Изображений в базе всего - {{img_all.count}} </p>
+          </div>
         {% else %}
           <p class="lead text-muted">Создайте свою коллекцию, как сделал это я - создатель. </p>
         {% endif %}
@@ -82,6 +84,9 @@
       <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           {% for img_obj in img_all %}
+          {% if img_obj.privacy_img %}
+
+          {% else %}
             <div class="col">
               <div class="scale card shadow-sm">
                 <a class="image-container" href="{% url 'picture-page' img_obj.id  %}">
@@ -122,6 +127,7 @@
                 </div>
               </div>
             </div>
+          {% endif %}
           {% endfor %}
         </div>
       </div>

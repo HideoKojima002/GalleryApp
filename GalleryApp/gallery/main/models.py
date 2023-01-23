@@ -22,7 +22,8 @@ class Image(models.Model):
     author = models.ForeignKey(User, related_name='author', on_delete=models.CASCADE)
     date_img = models.DateField(auto_now_add=True)
     time_img = models.TimeField(auto_now_add=True)
-    likes = models.ManyToManyField(User, related_name='post_likes',)
+    likes = models.ManyToManyField(User, related_name='post_likes')
+    privacy_img = models.BooleanField(User, default='False')
 
     def __str__(self):
         return self.title

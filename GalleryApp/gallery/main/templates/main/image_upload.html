@@ -21,10 +21,17 @@
               {% csrf_token %}
               <div class="form-error">{{ form.non_field_errors }}</div>
               {% for f in form %}
-                <div class="form-floating">
-                  {{ f }}
-                  <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }} </label>
-                </div>
+                {% if f == form.privacy_img %}
+                  <div class="form-switch">
+                    {{ f }}
+                    <label class="form-check-label" for="{{ f.id_for_label }}">{{ f.label }} </label>
+                  </div>
+                {% else %}
+                  <div class="form-floating">
+                    {{ f }}
+                    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }} </label>
+                  </div>
+                {% endif %}
               {% endfor %}
 
               <button  class="btn btn-primary my-2 "  type="submit">
