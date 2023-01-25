@@ -182,6 +182,8 @@
                                           dataType: "json",
                                           success: function(response) {
                                                  alert(response.message);
+                                                 $('#like_{{img_obj.title}}').Add.text(img_obj.likes.count);
+
                                            },
                                            error: function(rs, e) {
                                                   alert(rs.responseText);
