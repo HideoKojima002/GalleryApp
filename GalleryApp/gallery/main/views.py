@@ -9,17 +9,22 @@ from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.urls import reverse_lazy
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_methods, require_POST
 from django.views.generic import CreateView, FormView
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
+from django.db.models import Q
 
 from string import *
 from random import *
 from .forms import *
 from .models import *
 from secrets import choice
-from django.db.models import Q
+
+try:
+    from django.utils import simplejson as json
+except ImportError:
+    import json
 
 
 def context_func(form_opt=ImageForm(), search_opt=SearchForm()):
@@ -229,16 +234,34 @@ def logout_user(request):
     return redirect('login')
 
 
-@login_required(redirect_field_name='my_redirect_field',
-                login_url='main/login.html')
+@login_required
+@require_POST
 def like_image(request, img_id):
-    img = get_object_or_404(Image, id=img_id)
-    if request.user in img.likes.all():
-        img.likes.remove(request.user)
-        img.save()
-    else:
-        img.likes.add(request.user.id)
-    return redirect('index')
+    if request.method == 'POST':
+        user = request.user
+        img = get_object_or_404(Image, id=img_id)
+
+        if request.user in img.likes.all():
+            img.likes.remove(user)
+            message = 'Вы забрали лайк'
+        else:
+            img.likes.add(user)
+            message = 'Вы поставили лайк'
+
+    context = json.dumps({'likes_count': img.likes.count(), 'message': message})
+    return HttpResponse(context, content_type='application/json')
+
+
+# @login_required(redirect_field_name='my_redirect_field',
+#                 login_url='main/login.html')
+# def like_image(request, img_id):
+#     img = get_object_or_404(Image, id=img_id)
+#     if request.user in img.likes.all():
+#         img.likes.remove(request.user)
+#         img.save()
+#     else:
+#         img.likes.add(request.user.id)
+#     return redirect('index')
 
 
 class RegisterUser(CreateView):

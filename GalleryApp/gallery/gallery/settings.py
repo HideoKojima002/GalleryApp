@@ -133,7 +133,7 @@ EMAIL_USE_TLS = True
 
 EMAIL_USE_SSL = False
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 MEDIA_URL = '/media/'
 

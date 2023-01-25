@@ -25,6 +25,9 @@ class Image(models.Model):
     likes = models.ManyToManyField(User, related_name='post_likes')
     privacy_img = models.BooleanField(User, default='False')
 
+    def total_likes(self):
+        self.likes.count()
+
     def __str__(self):
         return self.title
 

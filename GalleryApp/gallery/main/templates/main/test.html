@@ -182,6 +182,46 @@
 </main>
 {% endblock %}
 
+<!--TODO-->
+                                    <!--Like1-->
+<!--                      {% if request.user.is_authenticated %}-->
+<!--                        <div>-->
+<!--                         # <form action="{% url 'like-image' img_id=img_obj.id %}"  method="POST" id="{{img_obj.title}}">-->
+<!--                            {% csrf_token %}-->
+<!--                              <button class="btn btn-secondary" type="submit"  href="#{{img_obj.title}}" name="image_id" value="{{ img_obj.id }}">-->
+<!--                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">-->
+<!--                                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>-->
+<!--                                </svg> {{img_obj.likes.count}} </button>-->
+<!--                          </form>-->
+<!--                        </div>-->
+<!--                      {% else %}-->
+<!--                        <div></div>-->
+<!--                      {% endif %}-->
+
+                        <!--Like2-->
+                        <button type="submit" class="btn btn-secondary" id="like_{{img_obj.title}}" name="image_like" value="Like">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">-->
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                          </svg> {{img_obj.likes.count}}
+                        </button>
+                       <script>
+                          $('#like_{{img_obj.title}}').click(function(){
+                                 $.ajax({
+                                          type: "POST",
+                                          url: "{% url 'like-image' img_id=img_obj.id%}",
+                                          data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                          dataType: "json",
+                                          success: function(response) {
+                                                 alert(response.message);
+                                           },
+                                           error: function(rs, e) {
+                                                  alert(rs.responseText);
+                                           }
+                                     });
+                               })
+                        </script>
+
+
 
 <!--
 
