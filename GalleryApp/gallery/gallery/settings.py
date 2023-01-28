@@ -1,5 +1,6 @@
 import os
 import pymysql
+
 from pathlib import Path
 # from config import module conf
 
@@ -62,7 +63,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'gallery.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -133,7 +133,7 @@ EMAIL_USE_TLS = True
 
 EMAIL_USE_SSL = False
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 

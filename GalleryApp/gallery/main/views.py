@@ -29,7 +29,7 @@ except ImportError:
 
 def context_func(form_opt=ImageForm(), search_opt=SearchForm()):
     search_form = search_opt
-    img_all = Image.objects.all().order_by('time_img', 'date_img')
+    img_all = Image.objects.all().order_by('uploaded_date')
     # img_all = Image.objects.all()
     form = form_opt
     # count = 0
@@ -208,17 +208,27 @@ def picture_page(request, img_id):
 
 
 def by_authors(request, user_id):
-    img = Image(author_id=user_id)     # Я бы сделал через get_object_or_404 но выходит ошибка количества: MultipleObjectsReturned: get() returned more than one Image -- it returned 5!
-    form = ImageForm()
-    author = img.author
-    img_all = Image.objects.filter(author=author).order_by('time_img', 'time_img')
+    author = get_object_or_404(User, id=user_id)
+    img_all = Image.objects.filter(author=author).order_by('uploaded_date')
     context = {
-        'form': form,
-        'img_all': img_all,
-        'img': img,
-        'author': author,
-    }
+            'img_all': img_all,
+            'author': author,
+        }
     return render(request, 'main/by_authors.html', context)
+
+
+# def by_authors(request, user_id):
+#     img = Image(author_id=user_id)     # Я бы сделал через get_object_or_404 но выходит ошибка количества: MultipleObjectsReturned: get() returned more than one Image -- it returned 5!
+#     form = ImageForm()
+#     author = img.author
+#     img_all = Image.objects.filter(author=author).order_by('time_img', 'time_img')
+#     context = {
+#         'form': form,
+#         'img_all': img_all,
+#         'img': img,
+#         'author': author,
+#     }
+#     return render(request, 'main/by_authors.html', context)
 
 
 def about_us(request):
@@ -243,12 +253,10 @@ def like_image(request, img_id):
 
         if request.user in img.likes.all():
             img.likes.remove(user)
-            message = 'Вы забрали лайк'
         else:
             img.likes.add(user)
-            message = 'Вы поставили лайк'
 
-    context = json.dumps({'likes_count': img.likes.count(), 'message': message})
+    context = json.dumps({'likes_count': img.likes.count()})
     return HttpResponse(context, content_type='application/json')
 
 

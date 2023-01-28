@@ -1,10 +1,17 @@
 {% extends 'main/based.html' %}
 
 
+{% load static %}
+
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/all_css.css' %}">
+{% endblock %}
+
+
 {% block title %}
 Страница картинки
 {% endblock %}
-
 
 
 {% block content %}
@@ -13,6 +20,9 @@
       <div class="row py-lg-5">
         <div class="col-lg-7 col-md-8 mx-auto">
           <h1 class="fw-light"> {{img.title}} </h1>
+          {% if img.privacy_img %}
+            <p class="lead text-muted">Скрыто от других пользователей</p>
+          {% endif %}
           <p class="lead text-muted">Теги: {{ tags|join:", " }}
 {#            {% for tag in img.tags.all %}#}
 {#              {{ tag.name }}{% if not forloop.last %},{% endif %}#}
@@ -25,21 +35,60 @@
       <div class="card shadow-sm">
         <a href="{{ img.image.url}}">
           <rect width="100%" height="100%" fill="#55595c" ></rect>
-          <img  width="100%" height="100%" fill="#55595c" src="{{ img.image.url}}" alt="connect" href="{% url 'picture-page' img.id  %}" ></a>
+          <img  width="100%" height="100%" fill="#55595c" src="{{ img.image.url}}" alt="connect" href="{% url 'picture-page' img.id  %}" >
+        </a>
         <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{img.title}}</text>
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
-            <small class="text-muted">{{img.date_img}} в {{img.time_img}}</small>
+            <small class="text-muted"> <a class="link-dark" href="{% url 'by-authors' user_id=img.author.id %}">{{img.author}}</a>
+            <div class="">{{img.uploaded_date.date}} в {{img.uploaded_date.time}}</div>
+            {% if request.user.is_authenticated %}
+              <button type="submit" class="btn btn-secondary" id="like_{{img.id}}" name="image_like" value="Like">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">-->
+                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                </svg> <span class="likes-count">{{ img.likes.count }}</span>
+              </button>
+              <!--                          <script type="js/javascript" src="{% static 'js/script.js' %}"></script>-->
+              <script>
+                       $('#like_{{img.id}}').click(function(){
+                               $.ajax({
+                                        type: "POST",
+                                        url: "{% url 'like-image' img_id=img.id%}",
+                                        data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                        dataType: "json",
+                                        success: function(response) {
+
+                                              let likeButton = $('#like_{{img.id}}');
+                                              let likesCount = likeButton.find('.likes-count');
+                                              likesCount.text(response['likes_count']);
+
+                                         },
+                                         error: function(rs, e) {
+                                                alert(rs.responseText);
+                                         }
+                               });
+                       })
+              </script>
+            {% else %}
+              <button type="submit" class="btn btn-secondary  disabled" id="like_{{img_obj.id}}" name="image_like" value="Like">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">-->
+                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                </svg> <span class="likes-count">{{ img_obj.likes.count }}</span>
+              </button>
+            {% endif %}
+            </small>
               {% if request.user.is_authenticated %}
                 {% if request.user.is_superuser or img.author_id == request.user.id %}
                   <div class="btn-group">
                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'delete' img.id %}">Удалить</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{{ img.image.url}}" download>Скачать</a>
                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'image-edit' img.id %}">Редактировать</a>
                     <a class="btn btn-sm btn-outline-secondary" href="{{ img.image.url}}">Открыть оригинал</a>
                   </div>
                 {% endif %}
               {% else %}
                  <div class="btn-group">
+                   <a class="btn btn-sm btn-outline-secondary" href="{{ img.image.url}}" download>Скачать</a>
                    <a class="btn btn-sm btn-outline-secondary" href="{{ img.image.url}}">Открыть оригинал</a>
                  </div>
              {% endif %}

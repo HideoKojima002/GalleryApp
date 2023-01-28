@@ -23,10 +23,17 @@
             {% csrf_token %}
             <div class="form-error">{{ form.non_field_errors }}</div>
               {% for f in form %}
-              <div class="form-floating">
-                {{ f }}
-                <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }} </label>
-              </div>
+                {% if f == form.privacy_img %}
+                  <div class="form-switch">
+                    {{ f }}
+                    <label class="form-check-label" for="{{ f.id_for_label }}">{{ f.label }} </label>
+                  </div>
+                {% else %}
+                  <div class="form-floating">
+                    {{ f }}
+                    <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }} </label>
+                  </div>
+                {% endif %}
               {% endfor %}
             <button  class="btn btn-primary my-2" type="submit"> Изменить  </button>
           </form>
@@ -40,8 +47,9 @@
         <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{img.title}}</text>
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
-            <small class="text-muted">{{img.id}}</small>
-            <div class="btn-group">
+            <small class="text-muted"> <a class="link-dark" href="{% url 'by-authors' user_id=img.author.id %}">{{img.author}}</a>
+            <div class="">{{img.uploaded_date.date}} в {{img.uploaded_date.time}}</div>
+            </small>
             </div>
           </div>
         </div>
