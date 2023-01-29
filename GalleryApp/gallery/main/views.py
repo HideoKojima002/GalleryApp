@@ -313,3 +313,7 @@ class ContactFormView(FormView):
             return HttpResponse('Найден некорректный заголовок')
         return redirect('index')
 
+
+def error_404(request, exception):
+    return render(request, 'errors/404.html')
+

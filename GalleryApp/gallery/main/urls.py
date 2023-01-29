@@ -20,4 +20,5 @@ urlpatterns = [
     path('like_image/<str:img_id>', like_image, name='like-image'),
 ]
 
+
 # class DataMinix:

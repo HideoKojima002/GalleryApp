@@ -6,6 +6,7 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/all_css.css' %}">
+<!--<link rel="stylesheet" href="{% static 'css/modal_ex.css' %}">-->
 {% endblock %}
 
 
@@ -118,7 +119,7 @@
                               <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                             </svg> <span class="likes-count">{{ img_obj.likes.count }}</span>
                           </button>
-                        <!--                          <script type="js/javascript" src="{% static 'js/script.js' %}"></script>-->
+<!--                        <script src="{% static 'js/script.js' %}"></script>-->
                           <script>
                             $('#like_{{img_obj.id}}').click(function(){
                                      $.ajax({

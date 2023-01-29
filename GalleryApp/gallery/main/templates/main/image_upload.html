@@ -15,6 +15,7 @@
           <p class="lead text-muted">Заполните поля и выберите файл. </p>
             <form method="post" enctype="multipart/form-data" action="{% url 'image-upload' %}">
               {% csrf_token %}
+
               <div class="form-error">{{ form.non_field_errors }}</div>
               {% for f in form %}
                 {% if f == form.privacy_img %}
@@ -26,6 +27,7 @@
                   <div class="form-floating">
                     {{ f }}
                     <label class="form-label" for="{{ f.id_for_label }}">{{ f.label }} </label>
+<!--                    <div class="form-error">{{ f.errors }}</div>-->
                   </div>
                 {% endif %}
               {% endfor %}

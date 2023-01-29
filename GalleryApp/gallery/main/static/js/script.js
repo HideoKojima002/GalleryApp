@@ -1,7 +1,7 @@
 <script>
   $('#like_{{img_obj.id}}').click(function(){
            $.ajax({
-                    type: "GET",
+                    type: "POST",
                     url: "{% url 'like-image' img_id=img_obj.id%}",
                     data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
                     dataType: "json",
