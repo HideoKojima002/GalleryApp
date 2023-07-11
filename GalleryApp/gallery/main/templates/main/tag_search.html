@@ -14,6 +14,20 @@
 {% endblock %}
 
 
+{% block headers %}
+<!-- main-menu-search bs-flex-grow-1 bs-d-none bs-d-sm-flex -->
+  <div class="mx-4 ">
+    <form class="d-flex" role="search" method="get"  action="{% url 'tag-search-2' %}">
+      <div class="form-floating">
+        {{ search_form.as_p }}
+        <label class="form-label" for="{{ search_form.id_for_label }}"> {{ search_form.label }} </label>
+      </div>
+      <!--      <button class="btn btn-outline-secondary p-2" type="submit">Поиск</button>-->
+    </form>
+  </div>
+{% endblock %}
+
+
 {% block content %}
   <main xmlns="http://www.w3.org/1999/html">
     {% if searched %}

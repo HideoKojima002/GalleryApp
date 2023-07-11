@@ -189,6 +189,7 @@ def tag_search_2(request):
     images_by_tag = Image.objects.filter(query).distinct()
     context = {'searched': searched,
                'tag': images_by_tag,
+               'search_form': SearchForm(),
                }
     return render(request, 'main/tag_search.html', context)
 

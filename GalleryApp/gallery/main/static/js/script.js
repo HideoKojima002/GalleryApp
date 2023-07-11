@@ -1,4 +1,4 @@
-<script>
+
   $('#like_{{img_obj.id}}').click(function(){
            $.ajax({
                     type: "POST",
@@ -17,4 +17,3 @@
                      }
                });
   })
-</script>

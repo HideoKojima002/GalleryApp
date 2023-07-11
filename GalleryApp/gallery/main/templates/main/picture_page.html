@@ -24,10 +24,14 @@
             <p class="lead text-muted">Скрыто от других пользователей</p>
           {% endif %}
           <p class="lead text-muted">Теги: {{ tags|join:", " }}
-{#            {% for tag in img.tags.all %}#}
-{#              {{ tag.name }}{% if not forloop.last %},{% endif %}#}
-{#            {% endfor %}#}
-          </p>
+<!--             <p class="lead text-muted">Теги: <a href="/tag_search_2?query={{tags|join:' '}}">{{ tags|join:", " }}</a>-->
+            {#<p class="lead text-muted">Теги:#}
+            {#{% for tag in img.tags.all %}#}
+            {#  <a class="link-dark" href="/tag_search_2?query={{tag.name}}">#}
+            {#    {{ tag.name }}{% if not forloop.last %},{% endif %}#}
+            {#   </a>#}
+            {#{% endfor %}#}
+          </p> {#</p>#}
           <p class="lead text-muted">Автор: <a class="link-dark" href="{% url 'by-authors' user_id=img.author.id %}">{{img.author}}</a></p>
         </div>
       </div>
@@ -85,8 +89,13 @@
                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'image-edit' img.id %}">Редактировать</a>
                     <a class="btn btn-sm btn-outline-secondary" href="{{ img.image.url}}">Открыть оригинал</a>
                   </div>
-                {% endif %}
               {% else %}
+                 <div class="btn-group">
+                   <a class="btn btn-sm btn-outline-secondary" href="{{ img.image.url}}" download>Скачать</a>
+                   <a class="btn btn-sm btn-outline-secondary" href="{{ img.image.url}}">Открыть оригинал</a>
+                 </div>
+            {% endif %}
+            {% else %}
                  <div class="btn-group">
                    <a class="btn btn-sm btn-outline-secondary" href="{{ img.image.url}}" download>Скачать</a>
                    <a class="btn btn-sm btn-outline-secondary" href="{{ img.image.url}}">Открыть оригинал</a>

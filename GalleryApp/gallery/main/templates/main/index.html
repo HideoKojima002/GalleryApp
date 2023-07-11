@@ -82,11 +82,13 @@
                     <rect width="100%" height="100%" fill="#55595c" ></rect>
                     <img  class="image" width="100%" height="100%" fill="#55595c" src="{{ img_obj.image.url}}" alt="connect" href="{% url 'picture-page' img_obj.id  %}" >
                   </a>
+                  <div class="container">
                   {% if img_obj.privacy_img %}
                     <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{img_obj.title}} (Скрыто)</text>
                   {% else %}
-                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{img_obj.title}}</text>
+                    <text class="" x="50%" y="50%" fill="#eceeef" dy=".3em">{{img_obj.title}}</text>
                   {% endif %}
+                  </div>
                   <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                       <!--Тут темный режим для ссылки и визуализации приватности-->
